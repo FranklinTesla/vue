@@ -20,3 +20,5 @@ packages/vue-template-compiler/build.js
 package-lock.json
 .idea/
 .vscode
+package-lock.json
+.idea/

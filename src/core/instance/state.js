@@ -56,6 +56,7 @@ export function initState (vm: Component) {
   }
   if (opts.computed) initComputed(vm, opts.computed)
   if (opts.watch && opts.watch !== nativeWatch) {
+    // opts.watch !== nativeWatch排除firefox的Object.prototype.watch
     initWatch(vm, opts.watch)
   }
 }

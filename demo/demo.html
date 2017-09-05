@@ -10,38 +10,46 @@
 <div id="app"></div>
 <script src="../dist/vue.js"></script>
 <script>
-    var List = Vue.extend({
+    const List = Vue.extend({
         props: ['list'],
         template: `<div>
-                        <p v-for="item in list" :key="item.id">{{item.name}}</p>
+                        <p v-for="item in list" :key="item.id" @click="$emit('hehe')">{{item.name}}</p>
                     </div>`
     });
-    Vue.component('list', List);
-    var source = [
-        {id: 0, name: 'bj'},
-        {id: 1, name: 'zo'},
-        {id: 2, name: 'qxf'},
-        {id: 3, name: 'zxr'}
-    ];
-    new Vue({
-        data: function() {
-            return {
-                productList: []
-            }
-        },
-        template: `<div>
-                        <button @click="change">change list</button>
-                        <list :list="productList"></list>
-                    </div>`,
-        methods: {
-            change: function() {
-                var context = this;
-                setTimeout(function() {
-                    context.productList = source;
-                }, 1000);
-            }
+    const root = new Vue({
+      data: function() {
+          return {
+            current: 'list',
+            nidie: null,
+            productList: [
+              {name: 'nidie', id: 1},
+              {name: 'nima', id: 2}
+            ]
+          }
+      },
+      template: `<div>
+                    <list :list="productList" @hehe="handleHehe"></list>
+                  </div>`,
+      methods: {
+        handleHehe() {
+          this.nidie = this.nidie === 'nima'? this.nidie = 'nidie': this.nidie = 'nima'
         }
-    }).$mount('#app');
+      },
+      watch: {
+        nidie: [
+          function(newVal) {
+            console.log(newVal)
+          },
+          function(newVal) {
+            console.log(newVal)
+          }
+        ]
+      },
+      components: {
+        list: List
+      }
+    })
+  root.$mount('#app');
 </script>
 </body>
 </html>

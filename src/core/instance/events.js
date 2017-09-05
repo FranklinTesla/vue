@@ -15,6 +15,8 @@ export function initEvents (vm: Component) {
   // init parent attached events
   const listeners = vm.$options._parentListeners
   if (listeners) {
+    // listeners是一个事件名（key）-处理函数（value）对象
+    // 同一事件绑定多个处理函数时，listeners是一个事件名（key）-处理函数数组（value）对象
     updateComponentListeners(vm, listeners)
   }
 }

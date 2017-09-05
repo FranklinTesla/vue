@@ -2163,6 +2163,8 @@ function initEvents (vm) {
   // init parent attached events
   var listeners = vm.$options._parentListeners;
   if (listeners) {
+    // listeners是一个事件名（key）-处理函数（value）对象
+    // 同一事件绑定多个处理函数时，listeners是一个事件名（key）-处理函数数组（value）对象
     updateComponentListeners(vm, listeners);
   }
 }
@@ -2355,9 +2357,9 @@ var isUpdatingChildComponent = false;
 
 function initLifecycle (vm) {
   var options = vm.$options;
-
   // locate first non-abstract parent
   var parent = options.parent;
+  // 抽象组件不会放到父子组件链中
   if (parent && !options.abstract) {
     while (parent.$options.abstract && parent.$parent) {
       parent = parent.$parent;
@@ -3062,6 +3064,7 @@ function initState (vm) {
   }
   if (opts.computed) { initComputed(vm, opts.computed); }
   if (opts.watch && opts.watch !== nativeWatch) {
+    // opts.watch !== nativeWatch排除firefox的Object.prototype.watch
     initWatch(vm, opts.watch);
   }
 }
@@ -4157,6 +4160,7 @@ function initMixin (Vue) {
     }
     /* istanbul ignore else */
     {
+      // 开发环境用于代理vm上的一些handler，给调试工具使用
       initProxy(vm);
     }
     // expose real self
@@ -5500,7 +5504,6 @@ function createPatchFunction (backend) {
       if (isDef(oldVnode)) { invokeDestroyHook(oldVnode); }
       return
     }
-
     var isInitialPatch = false;
     var insertedVnodeQueue = [];
 
@@ -5552,8 +5555,8 @@ function createPatchFunction (backend) {
           oldElm._leaveCb ? null : parentElm$1,
           nodeOps.nextSibling(oldElm)
         );
-
         if (isDef(vnode.parent)) {
+          // 判断当前vnode不是根节点
           // component root element replaced.
           // update parent placeholder node element, recursively
           var ancestor = vnode.parent;

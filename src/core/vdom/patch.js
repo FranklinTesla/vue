@@ -603,7 +603,6 @@ export function createPatchFunction (backend) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
       return
     }
-
     let isInitialPatch = false
     const insertedVnodeQueue = []
 
@@ -655,8 +654,8 @@ export function createPatchFunction (backend) {
           oldElm._leaveCb ? null : parentElm,
           nodeOps.nextSibling(oldElm)
         )
-
         if (isDef(vnode.parent)) {
+          // 判断当前vnode不是根节点
           // component root element replaced.
           // update parent placeholder node element, recursively
           let ancestor = vnode.parent
